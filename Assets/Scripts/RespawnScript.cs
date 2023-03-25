@@ -5,33 +5,42 @@ using UnityEngine;
 public class RespawnScript : MonoBehaviour
 {
 
-    private Vector3 respawnPoint = new Vector3(175f,101f,-151f);
+    public Vector3 respawnPoint1 = new Vector3(175f,101f,-151f);
+    public Vector3 respawnPoint2 = new Vector3(205f,93f,-188f);
+    public Vector3 respawnPoint3 = new Vector3(245f,90f,-202f);
 
-    private void OnTriggerStay(Collider other)
+    private Collider currentTrigger;
+
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("EnterTrigger " + other.name);
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Moving " + other.name);
-            Debug.Log(other.transform.position + other.name + "transform no1");
-            other.transform.position = respawnPoint;
-            Debug.Log(other.transform.position + other.name+ "transform no2 voilaa");
+            currentTrigger = this.GetComponent<BoxCollider>();
+
+            if(currentTrigger.gameObject.name == "TriggerRespawn1")
+            {
+                PlayerMovement pm = other.GetComponent<PlayerMovement>();
+                pm.Respawn(respawnPoint1);
+            }
+            else if(currentTrigger.gameObject.name == "TriggerRespawn2")
+            {
+                PlayerMovement pm = other.GetComponent<PlayerMovement>();
+                pm.Respawn(respawnPoint2);
+            }
+            else if(currentTrigger.gameObject.name == "TriggerRespawn3")
+            {
+                PlayerMovement pm = other.GetComponent<PlayerMovement>();
+                pm.Respawn(respawnPoint3);
+            }
         }
-        Debug.Log(other.transform.position + other.name + "jnhgfds");
-
     }
-    
-    // Start is called before the first frame update
-    void Start()
+
+    private void OnTriggerExit(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            // Clear the reference to the current trigger box
+            currentTrigger = null;
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    
 }

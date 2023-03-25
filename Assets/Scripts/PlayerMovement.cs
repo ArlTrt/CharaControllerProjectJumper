@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         CheckGrounded();                // appelle la fonction CheckGrounded()
-        Debug.Log(remainingJumps);
+       // Debug.Log(remainingJumps);
         if (Input.GetKeyDown(KeyCode.Space) && remainingJumps ==1 && canJump)        // verifie si le joueur appuie sur la barre d'espacement et touche le sol, calcule et applique la vitesse de saut
         {
             animator.SetTrigger("isJumpingT");              // lance l'animationde jump
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         
-        Debug.Log(velocityY);
+       // Debug.Log(velocityY);
         if(velocityY < -1 && !controller.isGrounded)            // verifie si la velocite est negative et que le player nest pas au sol, active le booleen isFalling
         {
             isFalling = true;
@@ -92,8 +92,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {                                               //sinon si wallLeft ou wallRight et shift, appelle StartWallRun()
-            Debug.Log(wallLeft + "L");
-            Debug.Log(wallRight + "R");
+           // Debug.Log(wallLeft + "L");
+           // Debug.Log(wallRight + "R");
             if ((wallLeft || wallRight) && Input.GetKey(KeyCode.LeftShift))
             {
                 StartWallRun();
@@ -163,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
         if (controller.isGrounded)
         {                                                   //si le player touche le sol, il ne tombe plus et il reprend ses remaining jumps
             animator.ResetTrigger("isJumpingT");
-            Debug.Log("sol");
+           // Debug.Log("sol");
             isFalling = false;
             remainingJumps = 1;
         }
@@ -273,7 +273,7 @@ public class PlayerMovement : MonoBehaviour
             }
         } */
     }
-    /*   
+    /*  
      
      // - apply movement modifiers -    
      chMotor.movement.maxForwardSpeed = speed; // set max speed
@@ -281,6 +281,17 @@ public class PlayerMovement : MonoBehaviour
      ch.height = Mathf.Lerp(ch.height, h, 5 * Time.deltaTime);
      tr.position.y += (ch.height - lastHeight) / 2; // fix vertical position*/
 
+    
+
+    public void Respawn(Vector3 respawnPoint)
+    {
+        CharacterController cc = GetComponent<CharacterController>();
+ 
+        cc.enabled = false;
+        transform.position = respawnPoint;
+        cc.enabled = true;
+        
+    }
 }
 
 
